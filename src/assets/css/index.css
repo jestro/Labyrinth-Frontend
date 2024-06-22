@@ -1,0 +1,58 @@
+/* Games List Page Specific */
+
+#host-game label {
+    width: 9.5rem;
+    display: inline-block;
+}
+
+#games-list input[type="radio"] {
+    margin: 0;
+}
+
+#game-list {
+    margin-bottom: 3rem;
+    max-height: 45vh;
+}
+
+.game-mode::first-letter {
+    text-transform: capitalize;
+}
+
+#game-list div {
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr;
+    align-items: center;
+    padding: 0.8rem;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+input[type="checkbox"] {
+    outline: none;
+    box-sizing: border-box;
+    height: 2rem;
+    width: 2rem;
+}
+
+/* Game Lobby Page Specific */
+
+.flex-lobby {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+#game-lobby h1 {
+    margin: 3rem;
+}
+
+#player-list div {
+    border: 1px solid #ccc;
+    font-size: 1.5rem;
+    padding: 0.8rem;
+    text-align: left;
+    width: 15rem;
+}

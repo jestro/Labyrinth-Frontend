@@ -1,0 +1,282 @@
+main {
+    display: inline-block;
+    margin: auto;
+    width: fit-content;
+    vertical-align: top;
+    image-rendering: pixelated;
+}
+
+aside {
+    width: 15vw;
+    height: 100vh;
+    text-align: center;
+    background-color: #4c5057;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+img {
+    max-width: 100%;
+    max-height: 40vh;
+    object-fit: contain;
+}
+
+aside div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#board {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+
+    height: 100vh;
+    width: 100%;
+}
+
+#maze {
+    width: auto;
+    margin: auto;
+    display: grid;
+}
+.row {
+    display: grid;
+    grid-template-columns: repeat(9, min(9vh, 6.5vw));
+    height: fit-content;
+}
+
+.grid-item {
+    position: relative;
+    aspect-ratio: 1/1;
+}
+
+.tile-image, .treasure-image, .player-image {
+    position: absolute;
+}
+
+.tile-image {
+    width: 100%;
+
+    z-index: 0;
+}
+
+.treasure-image {
+    width: 100%;
+
+    z-index: 1;
+}
+
+.player-image {
+    margin: 37.5%;
+    width: 25%;
+
+    z-index: 2;
+}
+
+#treasure-cards h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#collected-treasures {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    margin: auto 2rem;
+}
+
+#collected-treasures img {
+    min-width: 5rem;
+    max-width: 10rem;
+    image-rendering: pixelated;
+}
+
+#extra-tile #spare-tile {
+    display: flex;
+    flex-flow: column;
+}
+
+#extra-tile div {
+    width: 100%;
+    display: inline-block;
+}
+
+#extra-tile button {
+    display: inline-block;
+    background: transparent no-repeat center;
+    image-rendering: pixelated;
+    background-size: 4vw;
+    padding: 2vw;
+    border: none;
+}
+
+#extra-tile #rotate-right {
+    background-image: url("../images/minecraft/nature/ui/rotate-counter-clockwise.png");
+}
+
+#extra-tile #rotate-right:hover {
+    background-image: url("../images/minecraft/nature/ui/rotate-counter-clockwise-focus.png");
+}
+
+#extra-tile #rotate-left {
+    background-image: url("../images/minecraft/nature/ui/rotate-clockwise.png");
+}
+
+#extra-tile #rotate-left:hover {
+    background-image: url("../images/minecraft/nature/ui/rotate-clockwise-focus.png");
+}
+
+#treasure-cards img, #extra-tile img {
+    image-rendering: pixelated;
+    width: 10vw;
+    aspect-ratio: 1 / 1;
+}
+
+#maze div button {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    color: crimson;
+    font-weight: bold;
+    border: none;
+}
+
+#turn-list span {
+    width: 65%;
+    text-align: center;
+    justify-self: right;
+    margin-bottom: 1rem;
+    padding: 1rem 1rem 1rem 4rem;
+
+    background-position: left center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    background-size: 3rem;
+}
+
+.player0 {
+    background-image: url("../images/minecraft/nature/players/0.png");
+}
+
+.player1 {
+    background-image: url("../images/minecraft/nature/players/1.png");
+}
+
+.player2 {
+    background-image: url("../images/minecraft/nature/players/2.png");
+}
+
+.player3 {
+    background-image: url("../images/minecraft/nature/players/3.png");
+}
+
+.player4 {
+    background-image: url("../images/minecraft/nature/players/4.png");
+}
+
+.player5 {
+    background-image: url("../images/minecraft/nature/players/5.png");
+}
+
+.player6 {
+    background-image: url("../images/minecraft/nature/players/6.png");
+}
+
+.player7 {
+    background-image: url("../images/minecraft/nature/players/7.png");
+}
+
+div#maze button.arrow {
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.unreachable {
+    filter: brightness(75%);
+}
+
+/** NATURE THEME ARROWS */
+
+/** LEFT */
+#maze .arrow-left.theme-nature {
+    background: url("../images/minecraft/nature/ui/arrow-left.png");
+}
+
+#maze .arrow-left.theme-nature:hover {
+    background: url("../images/minecraft/nature/ui/arrow-left-hover.png");
+}
+
+#maze .arrow-left.theme-nature[disabled]:hover {
+    background: url("../images/minecraft/nature/ui/arrow-left-disabled.png");
+}
+
+#maze .arrow-left.theme-nature.pressed {
+    background: url("../images/minecraft/nature/ui/arrow-left-pressed.png");
+}
+
+/** RIGHT */
+#maze .arrow-right.theme-nature {
+    background: url("../images/minecraft/nature/ui/arrow-right.png");
+}
+
+#maze .arrow-right.theme-nature:hover {
+    background: url("../images/minecraft/nature/ui/arrow-right-hover.png");
+}
+
+#maze .arrow-right.theme-nature[disabled]:hover {
+    background: url("../images/minecraft/nature/ui/arrow-right-disabled.png");
+}
+
+#maze .arrow-right.theme-nature.pressed {
+    background: url("../images/minecraft/nature/ui/arrow-right-pressed.png");
+}
+
+/** TOP */
+#maze .arrow-top.theme-nature {
+    background: url("../images/minecraft/nature/ui/arrow-top.png");
+}
+
+#maze .arrow-top.theme-nature:hover {
+    background: url("../images/minecraft/nature/ui/arrow-top-hover.png");
+}
+
+#maze .arrow-top.theme-nature[disabled]:hover {
+    background: url("../images/minecraft/nature/ui/arrow-top-disabled.png");
+}
+
+#maze .arrow-top.theme-nature.pressed {
+    background: url("../images/minecraft/nature/ui/arrow-top-pressed.png");
+}
+
+/** BOTTOM */
+#maze .arrow-bottom.theme-nature {
+    background: url("../images/minecraft/nature/ui/arrow-bottom.png");
+}
+
+#maze .arrow-bottom.theme-nature:hover {
+    background: url("../images/minecraft/nature/ui/arrow-bottom-hover.png");
+}
+
+#maze .arrow-bottom.theme-nature[disabled]:hover {
+    background: url("../images/minecraft/nature/ui/arrow-bottom-disabled.png");
+}
+
+#maze .arrow-bottom.theme-nature.pressed {
+    background: url("../images/minecraft/nature/ui/arrow-bottom-pressed.png");
+}
+
+#turn-list .active {
+    color: greenyellow;
+}
+
+/* END ARROW BUTTONS */
+
+

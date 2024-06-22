@@ -1,0 +1,47 @@
+h1 {
+    font-size: 5rem;
+
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-top: 0.3rem;
+}
+
+div {
+    text-align: center;
+
+}
+
+table {
+    display: inline-block;
+    margin-top: 2rem;
+    width: auto;
+}
+
+td {
+    width: 15vw;
+    font-size: 2rem;
+}
+
+.flex-leaderboard {
+    margin: 4rem auto 4rem auto;
+    display: flex;
+    flex-flow: column wrap;
+    width: 50%;
+}
+
+.flex-leaderboard-item {
+    padding: 1rem;
+    border: 0.1rem solid white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+}

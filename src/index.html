@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Labyrinth</title>
+
+    <link href="assets/css/reset.css" rel="stylesheet">
+    <link href="assets/css/screen.css" rel="stylesheet">
+    <link href="assets/css/index.css" rel="stylesheet">
+
+    <script src="assets/js/main.js" type="module"></script>
+</head>
+<body>
+<section class="screen center-screen" id="start-screen">
+    <form class="content-box">
+        <h1>Welcome to Labyrinth!</h1>
+        <p class="errormessage hidden"></p>
+
+        <div>
+            <label for="player-name">Player Name</label>
+            <input id="player-name" name="player-name" placeholder="Enter name" type="text">
+        </div>
+
+        <button class="button big-button" id="host">Host Game</button>
+        <button class="button big-button" id="join">Join Game</button>
+    </form>
+</section>
+
+<section class="screen center-screen" id="host-game">
+    <form class="content-box">
+        <h1>Host Game</h1>
+        <p class="errormessage hidden"></p>
+
+        <div>
+            <label for="game-name">Game Name</label>
+            <input id="game-name" name="game-name" placeholder="Enter game name" type="text">
+        </div>
+
+        <div>
+            <label for="game-mode">Game Mode</label>
+            <select id="game-mode" name="modes">
+            </select>
+        </div>
+        <div>
+            <label for="board-size">Board Size</label>
+            <select id="board-size" name="sizes">
+
+            </select>
+        </div>
+        <div>
+            <label for="treasures">Treasure Goal</label>
+            <input id="treasures" max="10" min="1" name="treasures" type="number" value="1">
+        </div>
+
+        <div>
+            <label for="players">Player Count</label>
+            <input id="players" max="8" min="2" name="players" type="number" value="2">
+        </div>
+
+        <p class="errormessage  hidden"></p>
+
+        <button class="button big-button go-to-start">Back</button>
+        <button class="big-button button" id="game-host">Host Game</button>
+    </form>
+</section>
+
+<section class="screen center-screen" id="games-list">
+    <div class="content-box">
+        <h1>Game List</h1>
+        <p class="errormessage  hidden"></p>
+
+        <div class="scrollable" id="game-list">
+
+        </div>
+
+        <template>
+            <div>
+                <label for="">Text</label>
+                <span class="player-count"></span>
+                <span class="game-mode"></span>
+                <input id="" name="game-id" type="radio" value="">
+            </div>
+        </template>
+        <div>
+            <label for="show-all-games">Show All Games</label>
+            <input id="show-all-games" type="checkbox">
+        </div>
+        <button class="button big-button go-to-start">Back</button>
+        <button class="button big-button" id="join-game">Join Game</button>
+    </div>
+</section>
+
+
+<section class="screen center-screen" id="game-lobby">
+    <div class="content-box">
+        <h1>Game Lobby</h1>
+        <p class="errormessage hidden"></p>
+
+        <div class="flex-lobby">
+            <div id="player-list">
+            </div>
+            <aside>
+                <p id="lobby-message">Waiting for players...</p>
+                <p id="player-count"></p>
+            </aside>
+        </div>
+
+        <button class="button big-button" id="leave-lobby">Leave Game</button>
+    </div>
+</section>
+</body>
+
+</html>

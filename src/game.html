@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Game</title>
+
+    <link href="assets/css/reset.css" rel="stylesheet">
+    <link href="assets/css/screen.css" rel="stylesheet">
+    <link href="assets/css/game.css" rel="stylesheet">
+
+    <script src="assets/js/main.js" type="module"></script>
+</head>
+
+<body>
+    <div class="screen" id="board">
+        <aside id="game-bar" aria-label="game-bar">
+            <div id="treasure-cards">
+                <figure>
+                    <figcaption>
+                        <h2>Objective</h2>
+                    </figcaption>
+                    <img src="assets/images/minecraft/nature/treasure/Bat.png" alt="treasure-card">
+                </figure>
+            </div>
+
+            <div>
+                <h2>Collected Treasures</h2>
+                <div id="collected-treasures">
+                </div>
+            </div>
+
+            <div id="extra-tile">
+                <div id="spare-tile">
+                </div>
+                <div>
+                    <button id="rotate-left"></button>
+                    <button id="rotate-right"></button>
+                </div>
+            </div>
+        </aside>
+
+        <main>
+            <div id="maze">
+
+            </div>
+
+            <template>
+                <div class="row">
+                    <div class="left-arrow"></div>
+                    <div class="grid-item" data-col="0"></div>
+                    <div class="grid-item" data-col="1"></div>
+                    <div class="grid-item" data-col="2"></div>
+                    <div class="grid-item" data-col="3"></div>
+                    <div class="grid-item" data-col="4"></div>
+                    <div class="grid-item" data-col="5"></div>
+                    <div class="grid-item" data-col="6"></div>
+                    <div class="right-arrow"></div>
+                </div>
+            </template>
+        </main>
+
+        <aside id="status-bar" aria-label="status-bar">
+            <div id="turn-list">
+
+            </div>
+
+            <p class="errormessage hidden"></p>
+
+            <p id="turn-state"></p>
+
+            <template id="player">
+                <span></span>
+            </template>
+
+            <button id="leave-game" class="button big-button">Leave Game</button>
+        </aside>
+    </div>
+</body>
+</html>

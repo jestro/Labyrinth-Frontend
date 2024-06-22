@@ -1,0 +1,9 @@
+.vscode
+package-lock.json
+package.json
+node_modules/
+.idea
+.DS_Store
+.scannerwork
+.gitlab-ci.yml
+sonar-project.properties
