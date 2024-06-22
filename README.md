@@ -1,6 +1,6 @@
 # Labyrinth Frontend
 
-A frontend for a web application game made with Javascript, HTML5 and CSS3. This frontend was made as a part of a group project within bachelor studies and is meant to simulate games of [Labyrinth](https://www.ravensburger.org/ca-en/discover/labyrinth/index.html).
+A frontend for a web application game made with Javascript, HTML5 and CSS3. This frontend was made as a part of a group project within bachelor studies and is meant to simulate games of [Labyrinth](https://www.ravensburger.org/ca-en/discover/labyrinth/index.html) together with the [backend](https://github.com/jestro/Labyrinth-Backend).
 
 ## How to set up? (local)
 
