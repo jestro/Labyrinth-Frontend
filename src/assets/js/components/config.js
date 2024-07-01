@@ -22,11 +22,10 @@ const GAME_PREFIX = 'group13';
 
 const ERRORHANDLER_SELECTOR = '.screen:not(.hidden) .errormessage';
 
-const LOCAL_SERVER = `http://localhost:8000/`;
-const DEPLOYED_SERVER = ``;
+const SERVER_URL = `http://localhost:8000/`;
 
 function getAPIUrl() {
-    return LOCAL_SERVER;
+    return SERVER_URL;
 }
 
 function getImageAssetsPath() {

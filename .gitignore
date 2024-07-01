@@ -7,3 +7,5 @@ node_modules/
 .scannerwork
 .gitlab-ci.yml
 sonar-project.properties
+.vnuignore
+.gitignore
