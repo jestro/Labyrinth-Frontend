@@ -1,7 +1,7 @@
-import * as Config from '../components/config.js';
-import * as Requests from '../data-connector/api-requests.js';
+import * as Config from '../data/config.js';
+import * as Requests from '../api/api-requests.js';
 import * as ScreenManager from '../components/screen-manager.js';
-import * as Storage from '../data-connector/local-storage-abstractor.js';
+import * as Storage from '../components/local-storage.js';
 
 function init() {
     document.querySelector('#join-game').addEventListener('click', joinGame);
@@ -13,7 +13,7 @@ function fetchAndDisplayGamesList() {
     const showAllGames = document.querySelector('#show-all-games').checked;
     Requests.getGamesList(!showAllGames, (games) => {
         showGames(games);
-        setTimeout(fetchAndDisplayGamesList, Config.UI_POLLING_TIME_LONG);
+        setTimeout(fetchAndDisplayGamesList, Config.UI_POLLING_TIME_SHORT);
     });
 }
 
@@ -47,13 +47,12 @@ function showGames(games) {
         const $templateClone = $template.content.firstElementChild.cloneNode(true);
         renderGame($templateClone, game);
 
-        if (!isGameFull(game)) {
-            $container.insertAdjacentHTML('beforeend', $templateClone.outerHTML);
-        } else {
+        if (isGameFull(game)) {
             const $radioInput = $templateClone.querySelector('input[type="radio"]');
             $radioInput.disabled = true;
-            $container.appendChild($templateClone);
         }
+
+        $container.insertAdjacentHTML('beforeend', $templateClone.outerHTML);
     }
 
     selectRememberedGame(selectedGame);
