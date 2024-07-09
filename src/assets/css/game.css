@@ -17,16 +17,9 @@ aside {
     justify-content: space-around;
 }
 
-img {
-    max-width: 100%;
-    max-height: 40vh;
-    object-fit: contain;
-}
-
 aside div {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 #board {
@@ -78,8 +71,8 @@ aside div {
     z-index: 2;
 }
 
-#treasure-cards h2 {
-    font-size: 2rem;
+#game-bar h2 {
+    font-size: 1.5rem;
     margin-bottom: 1rem;
 }
 
@@ -87,15 +80,6 @@ aside div {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-    margin: auto 2rem;
-}
-
-#collected-treasures img {
-    min-width: 5rem;
-    max-width: 10rem;
-    image-rendering: pixelated;
 }
 
 #extra-tile #spare-tile {
@@ -133,10 +117,13 @@ aside div {
     background-image: url("../images/minecraft/nature/ui/rotate-clockwise-focus.png");
 }
 
-#treasure-cards img, #extra-tile img {
+#treasure-cards img, #extra-tile img, #collected-treasures img {
     image-rendering: pixelated;
     width: 10vw;
-    aspect-ratio: 1 / 1;
+}
+
+#collected-treasures img {
+    width: 5vw;
 }
 
 #maze div button {
