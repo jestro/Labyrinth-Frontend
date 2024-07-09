@@ -1,14 +1,20 @@
 import * as Board from './board.js';
 import * as GameRenderer from './game-renderer.js';
-import * as Sounds from '../../components/sounds.js';
-import * as Storage from '../../data-connector/local-storage-abstractor.js';
-import {renderSpareTile} from './game-renderer.js';
+import * as Storage from '../../components/local-storage.js';
 
 function displaySidebars(playerData, playerNames, currentShovePlayer, currentMovePlayer) {
     renderTurnList(playerData, playerNames, currentShovePlayer, currentMovePlayer);
     renderTurnState();
     renderCollectedTreasures(playerData);
     renderCurrentObjective();
+}
+
+function renderSpareTile() {
+    const $spareTileDiv = GameRenderer.renderTile(Board.getSpareTile());
+    const $container = document.querySelector('#spare-tile');
+    $spareTileDiv.querySelector('.tile-image').classList.remove('tile-image');
+    $container.innerHTML = "";
+    $container.innerHTML += $spareTileDiv.innerHTML;
 }
 
 function renderTurnList(playerData, playerNames, currentShovePlayer, currentMovePlayer) {
@@ -25,7 +31,7 @@ function renderTurnList(playerData, playerNames, currentShovePlayer, currentMove
 }
 
 function renderTurnListItem($templateClone, playerName, playerIndex, playerData, currentShovePlayer, currentMovePlayer) {
-    $templateClone.setAttribute('class', `player${playerIndex}`);
+    $templateClone.classList.add(`player${playerIndex}`);
 
     if (currentShovePlayer === playerName || currentMovePlayer === playerName) {
         $templateClone.classList.add('active');
@@ -64,7 +70,7 @@ function renderCollectedTreasures(playerData) {
 
 function renderCollectedTreasureImage(treasure) {
     const treasureImgName = treasure.replaceAll(' ', '-');
-    return `<img src="assets/images/minecraft/nature/treasure/${treasureImgName}.png" alt="${treasure}">`;
+    return `<img src="assets/images/minecraft/nature/treasure/${treasureImgName}.png" alt="${treasure}" title="${treasure}">`;
 }
 
 function hideRotateButtons() {
@@ -72,4 +78,4 @@ function hideRotateButtons() {
     document.querySelector('#rotate-right').classList.add('hidden');
 }
 
-export { displaySidebars, hideRotateButtons};
+export { displaySidebars, hideRotateButtons, renderSpareTile };
