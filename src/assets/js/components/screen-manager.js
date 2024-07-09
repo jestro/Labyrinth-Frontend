@@ -15,7 +15,7 @@ function init() {
 function switchToScreen(screen) {
     const $screen = document.querySelector(`.screen#${screen}`);
     if ($screen === null) return false;
-    hideAllScreens();
+    hideCurrentScreen();
     $screen.classList.remove('hidden');
     initScreen($screen.id);
 }
@@ -47,6 +47,10 @@ function hideAllScreens() {
     document.querySelectorAll('.screen').forEach(($screen) => {
         $screen.classList.add('hidden');
     });
+}
+
+function hideCurrentScreen() {
+    document.querySelector('.screen:not(.hidden)').classList.add('hidden');
 }
 
 export { init, getCurrentScreen, switchToScreen, switchToPage };
