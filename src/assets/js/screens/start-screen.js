@@ -1,7 +1,7 @@
-import * as Requests from '../data-connector/api-requests.js';
+import * as Requests from '../api/api-requests.js';
 import * as ScreenManager from '../components/screen-manager.js';
-import * as Storage from '../data-connector/local-storage-abstractor.js';
-import * as Util from '../components/util.js';
+import * as Storage from '../components/local-storage.js';
+import * as Handler from '../components/error-handler.js';
 
 function init() {
     Requests.connectionTestApiInfo();
@@ -43,9 +43,7 @@ function navigate(e, screen) {
 function checkUsernameAndSave(){
     const username = document.querySelector('#player-name').value;
 
-    if (!Util.isInputValid(username)) {
-        Util.renderErrorMessage(Util.inputErrorMessage(username));
-    } else {
+    if (Handler.renderInvalidNameError(username) == null) {
         Storage.saveToStorage('username', username);
     }
 }
