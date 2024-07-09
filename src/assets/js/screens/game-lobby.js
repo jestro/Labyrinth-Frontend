@@ -2,6 +2,7 @@ import * as Config from '../components/config.js';
 import * as Requests from '../data-connector/api-requests.js';
 import * as ScreenManager from '../components/screen-manager.js';
 import * as Storage from '../data-connector/local-storage-abstractor.js';
+import * as Util from "../components/util.js";
 
 function init() {
     document.querySelector('#leave-lobby').addEventListener('click', leaveLobby);
@@ -27,18 +28,12 @@ function refreshPlayerList(players, maxCount) {
     $playerList.innerHTML = '';
 
     for (const player of players) {
-        $playerList.insertAdjacentElement('beforeend', renderListDiv(player));
+        $playerList.insertAdjacentElement('beforeend', Util.createParagraph(player));
     }
 
     for (let i = 0; i < maxCount - players.length; i++) {
-        $playerList.insertAdjacentElement('beforeend', renderListDiv('Empty'));
+        $playerList.insertAdjacentElement('beforeend', Util.createParagraph('Empty'));
     }
-}
-
-function renderListDiv(item) {
-    const $div = document.createElement('div');
-    $div.innerText = item;
-    return $div;
 }
 
 function refreshPlayerCount(players, maxCount) {

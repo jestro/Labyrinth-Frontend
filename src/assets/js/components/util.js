@@ -60,8 +60,14 @@ function createOptionElement(content, value){
     return $option;
 }
 
+function createParagraph(text) {
+    const $p = document.createElement('p');
+    $p.innerText = text;
+    return $p;
+}
+
 function isOdd(x) {
     return (x + 1) % 2 === 0;
 }
 
-export { isInputTooLarge, isInputClean, isInputEmpty, isInputValid, isCountValid, inputErrorMessage, renderErrorMessage, clearErrorMessage, createOptionElement, isOdd };
+export { isInputTooLarge, isInputClean, isInputEmpty, isInputValid, isCountValid, inputErrorMessage, renderErrorMessage, clearErrorMessage, createOptionElement, isOdd, createParagraph };
