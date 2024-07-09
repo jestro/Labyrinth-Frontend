@@ -1,6 +1,6 @@
-import * as Requests from '../data-connector/api-requests.js';
-import * as Sounds from '../components/sounds.js';
-import * as Storage from '../data-connector/local-storage-abstractor.js';
+import * as Requests from '../api/api-requests.js';
+import * as Storage from '../components/local-storage.js';
+import * as Config from "../data/config.js";
 
 function init(){
     const gameId = Storage.loadFromStorage('gameId');
@@ -9,40 +9,30 @@ function init(){
         renderWinner(gameData['players']);
         displayLeaderboard(gameData['players']);
 
-        if(getWinningPlayer(gameData['players']) === Storage.loadFromStorage('username')){
-            Sounds.ACHIEVEMENT.play();
+        if(getWinningPlayerName(gameData['players']) === Storage.loadFromStorage('username')){
+            Config.TREASURE_COLLECT_SOUND.play();
         }
     });
 }
 
-function getWinningPlayer(playersObj) {
-    for (const player in playersObj) {
-        if (playersObj[player]['state'] === 'WON') {
-            return player;
+function getWinningPlayerName(playersObj) {
+    for (const playerName in playersObj) {
+        if (playersObj[playerName]['state'] === 'WON') {
+            return playerName;
         }
     }
 
     return null;
 }
 
-function isWinningPlayer(playersObj) {
-    for (const player in playersObj) {
-        if (playersObj[player]['state'] === 'WON') {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 function renderWinner(playersObj) {
     const $winningHeader = document.querySelector('#end-screen h2');
-    const winningPlayerObj = getWinningPlayer(playersObj);
+    const winningPlayerName = getWinningPlayerName(playersObj);
 
-    if (winningPlayerObj === null) {
+    if (winningPlayerName === null) {
         $winningHeader.innerHTML = `No winning player!`;
     } else {
-        $winningHeader.innerHTML = `${winningPlayerObj} won the game!`;
+        $winningHeader.innerHTML = `${winningPlayerName} won the game!`;
     }
 }
 
@@ -85,4 +75,4 @@ function displayLeaderboard(playersObj) {
     }
 }
 
-export { init, isWinningPlayer };
+export { init, getWinningPlayerName };
