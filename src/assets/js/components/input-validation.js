@@ -21,10 +21,6 @@ function isCountValid(count, min, max){
     return !isNaN(count) && count <= max && count >= min;
 }
 
-function isInputValid(str) {
-    return !isInputEmpty(str) && !isInputTooLarge(str) && isInputClean(str);
-}
-
 function isTreasureCountValid(treasureCount) {
     return isCountValid(treasureCount, Config.MIN_TREASURES, Config.MAX_TREASURES);
 }
