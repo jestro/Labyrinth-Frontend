@@ -1,11 +1,10 @@
-import * as Config from '../../components/config.js';
+import * as Config from '../../data/config.js';
 import * as EndScreen from '../end-screen.js';
 import * as GameRenderer from './game-renderer.js';
-import * as Requests from '../../data-connector/api-requests.js';
+import * as Requests from '../../api/api-requests.js';
 import * as ScreenManager from '../../components/screen-manager.js';
 import * as SidebarRenderer from './sidebar-renderer.js';
-import * as Sounds from '../../components/sounds.js';
-import * as Storage from '../../data-connector/local-storage-abstractor.js';
+import * as Storage from '../../components/local-storage.js';
 
 let currentObjective = null;
 let isYourShove = false;
@@ -65,13 +64,13 @@ function displayGame() {
         setGameMode(game['description']['gameMode']);
 
         if (isYourShove === false && currentShovePlayer === Storage.loadFromStorage('username')) {
-            Sounds.LEVEL_UP.play();
+            Config.TURN_SOUND.play();
         }
 
         updateTurnVariables(currentShovePlayer, currentMovePlayer);
         updateCurrentObjective(game['players']);
 
-        if (EndScreen.isWinningPlayer(game['players'])) {
+        if (EndScreen.getWinningPlayerName(game['players']) != null) {
             ScreenManager.switchToPage('endscreen');
         }
 
@@ -89,7 +88,7 @@ function updateTurnVariables(currentShovePlayer, currentMovePlayer) {
 function updateCurrentObjective(playerData){
     const newObjective = playerData[Storage.loadFromStorage('username')]['objective'];
     if(currentObjective !== null && currentObjective !== newObjective){
-        Sounds.ACHIEVEMENT.play();
+        Config.TREASURE_COLLECT_SOUND.play();
     }
     currentObjective = newObjective;
 }
@@ -128,7 +127,7 @@ function shove(e) {
 }
 
 function activateArrow($button) {
-    Sounds.CLICK.play();
+    Config.CLICK_SOUND.play();
     $button.classList.add('pressed');
 
     setTimeout(() => {
@@ -204,31 +203,31 @@ function fetchSpareTile() {
         Requests.getSingularGame(Storage.loadFromStorage('gameId'), 'spareTile', (data) => {
             spareTile = data['spareTile'];
 
-            GameRenderer.renderSpareTile();
+            SidebarRenderer.renderSpareTile();
         });
     }
 }
 
 function rotateSpareTileClockwise() {
-    Sounds.CLICK.play();
+    Config.CLICK_SOUND.play();
     const walls = spareTile['walls'];
     const left = walls[walls.length - 1];
     for (let i = walls.length - 1; i > 0; i--) {
         walls[i] = walls[i - 1];
     }
     walls[0] = left;
-    GameRenderer.renderSpareTile();
+    SidebarRenderer.renderSpareTile();
 }
 
 function rotateSpareTileCounterClockwise() {
-    Sounds.CLICK.play();
+    Config.CLICK_SOUND.play();
     const walls = spareTile['walls'];
     const top = walls[0];
     for (let i = 1; i < walls.length; i++) {
         walls[i - 1] = walls[i];
     }
     walls[walls.length - 1] = top;
-    GameRenderer.renderSpareTile();
+    SidebarRenderer.renderSpareTile();
 }
 
 
@@ -250,21 +249,8 @@ function getSpareTile() {
     return spareTile;
 }
 
-function getPossibleLocations() {
-    return possiblePaths;
-}
-
 function getBoardRows() {
     return boardRows;
 }
 
-export {
-    init,
-    getIsYourShove,
-    getIsYourMove,
-    getSpareTile,
-    getCurrentObjective,
-    isValidMove,
-    getPossibleLocations,
-    getBoardRows
-};
+export { init, getIsYourShove, getIsYourMove, getSpareTile, getCurrentObjective, isValidMove, getBoardRows };
