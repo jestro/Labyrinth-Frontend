@@ -1,7 +1,6 @@
 import * as Board from './board.js';
-import * as Config from '../../components/config.js';
+import * as Config from '../../data/config.js';
 import * as Util from '../../components/util.js';
-
 
 // -- Maze Rendering --
 
@@ -46,7 +45,7 @@ function renderMaze($container, maze, playerNames) {
             $template.querySelector(gridSelector).append(renderTile(tile, playerNames));
             $template.querySelector(gridSelector).setAttribute('data-row', x);
             $template.querySelector(gridSelector).setAttribute('data-col', y);
-            if (!Board.isValidMove(x, y,Board.getPossibleLocations())){
+            if (!Board.isValidMove(x, y)){
                 $template.querySelector(gridSelector).classList.add('unreachable');
             }
         }
@@ -72,7 +71,7 @@ function addTileImage($imageDiv, wallsOnTile) {
     const $tileImage = document.createElement('img');
     $tileImage.src = tileImgPath(wallsOnTile);
     $tileImage.alt = tileImgName(wallsOnTile);
-    $tileImage.setAttribute('class', 'tile-image');
+    $tileImage.classList.add('tile-image');
     $imageDiv.append($tileImage);
 }
 
@@ -101,7 +100,7 @@ function addTreasureImage($imageDiv, treasureOnTile) {
         $treasureImage = document.createElement('img');
         $treasureImage.src = treasurePath;
         $treasureImage.alt = treasureOnTile;
-        $treasureImage.setAttribute('class', 'treasure-image');
+        $treasureImage.classList.add('treasure-image');
         $imageDiv.append($treasureImage);
     }
 }
@@ -113,23 +112,18 @@ function getTreasureImagePath(treasure) {
 function addPlayerImage($imageDiv, playersOnTile, playerNames) {
     let $playerImage;
     if (playersOnTile !== undefined && playersOnTile.length > 0) {
-        const playerPath = `${Config.getImageAssetsPath()}/players/${playerNames.indexOf(playersOnTile[0])}.png`;
+        const playerPath = getPlayerImagePath(playerNames, playersOnTile);
         $playerImage = document.createElement('img');
         $playerImage.src = playerPath;
         $playerImage.alt = playersOnTile[0];
-        $playerImage.setAttribute('class', 'player-image');
+        $playerImage.classList.add('player-image');
         $imageDiv.append($playerImage);
     }
 }
 
-function renderSpareTile() {
-    const $spareTileDiv = renderTile(Board.getSpareTile());
-    const $container = document.querySelector('#spare-tile');
-    $spareTileDiv.querySelector('.tile-image').classList.remove('tile-image');
-    $container.innerHTML = "";
-    $container.innerHTML += $spareTileDiv.innerHTML;
+function getPlayerImagePath(playerNames, playersOnTile) {
+    return `${Config.getImageAssetsPath()}/players/${playerNames.indexOf(playersOnTile[0])}.png`
 }
-
 
 // -- Arrow Rendering --
 
@@ -185,4 +179,4 @@ function styleArrow(side, row, col) {
     return $arrow;
 }
 
-export { displayMaze, renderSpareTile, getTreasureImagePath, setMazeDisplaySize };
+export { displayMaze, renderTile, getTreasureImagePath, setMazeDisplaySize };
