@@ -20,6 +20,10 @@ const GAME_THEME = 'minecraft/nature';
 const UI_THEME = 'nature';
 const GAME_PREFIX = 'group13';
 
+const CLICK_SOUND = new Audio(`assets/audio/${GAME_THEME}/click.mp3`);
+const TURN_SOUND = new Audio(`assets/audio/${GAME_THEME}/level-up.mp3`);
+const TREASURE_COLLECT_SOUND = new Audio(`assets/audio/${GAME_THEME}/achievement.mp3`);
+
 const ERRORHANDLER_SELECTOR = '.screen:not(.hidden) .errormessage';
 
 const SERVER_URL = `http://localhost:8000/`;
@@ -53,5 +57,8 @@ export {
     MAX_TREASURES,
     MIN_TREASURES,
     MAX_PLAYERS,
-    MIN_PLAYERS
+    MIN_PLAYERS,
+    CLICK_SOUND,
+    TURN_SOUND,
+    TREASURE_COLLECT_SOUND
 };
