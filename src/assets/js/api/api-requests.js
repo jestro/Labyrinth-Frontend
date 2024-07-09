@@ -1,7 +1,7 @@
-import * as CommunicationAbstractor from './api-communication-abstractor.js';
-import * as Config from '../components/config.js';
-import * as ErrorHandler from './error-handler.js';
-import * as Storage from './local-storage-abstractor.js';
+import * as Communication from './api-communication.js';
+import * as Config from '../data/config.js';
+import * as Handler from '../components/error-handler.js';
+import * as Storage from '../components/local-storage.js';
 
 // Run = function parameter
 // Check out the loading of the games in games-list.js to have a reference of how it works
@@ -9,11 +9,11 @@ import * as Storage from './local-storage-abstractor.js';
 // -- GET --
 
 function connectionTestApiInfo() {
-    CommunicationAbstractor.fetchFromServer('info', 'GET').catch(ErrorHandler.handleError);
+    Communication.fetchFromServer('info', 'GET').catch(Handler.handleAPIError);
 }
 
 function getTreasureList(run) {
-    CommunicationAbstractor.fetchFromServer('treasures', 'GET')
+    Communication.fetchFromServer('treasures', 'GET')
         .then(data => {
             // data = an array of treasure names
             run(data);
@@ -21,21 +21,21 @@ function getTreasureList(run) {
 }
 
 function getGamesList(showOnlyAccepting, run) {
-    CommunicationAbstractor.fetchFromServer(`games?prefix=${Config.GAME_PREFIX}&onlyAccepting=${showOnlyAccepting}`, 'GET')
+    Communication.fetchFromServer(`games?prefix=${Config.GAME_PREFIX}&onlyAccepting=${showOnlyAccepting}`, 'GET')
         .then(data => {
             // data = an array of objects holding the games' info and state
             // (players, id, gamemode, current shove/move, ...)
             run(data);
-        }).catch(ErrorHandler.handleError);
+        }).catch(Handler.handleAPIError);
 }
 
 function getSingularGame(gameId, info, run) {
-    CommunicationAbstractor.fetchFromServer(`games/${gameId}${infoRequestString(info)}`, 'GET')
+    Communication.fetchFromServer(`games/${gameId}${infoRequestString(info)}`, 'GET')
         .then(data => {
             // data = object with info about whatever you ask for
             // maze, players, initialMaze, history and spareTile (options)
             run(data);
-        }).catch(ErrorHandler.handleError);
+        }).catch(Handler.handleAPIError);
 }
 
 function infoRequestString(info) {
@@ -56,34 +56,34 @@ function infoRequestString(info) {
 }
 
 function getGameData(run) {
-    CommunicationAbstractor.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}?description=true&players=true&maze=true`)
+    Communication.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}?description=true&players=true&maze=true`)
         .then(gameData => {
             run(gameData);
-        }).catch(ErrorHandler.handleError);
+        }).catch(Handler.handleAPIError);
 }
 
 function getSingularPlayer(playerName, run) {
-    CommunicationAbstractor.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}/players/${playerName}`, 'GET')
+    Communication.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}/players/${playerName}`, 'GET')
         .then(data => {
             // data = object with player state
             // (name, location, objective, state, ...)
             run(data);
-        }).catch(ErrorHandler.handleError);
+        }).catch(Handler.handleAPIError);
 }
 
 function getReachableLocations(gameId, row, col, run) {
-    CommunicationAbstractor.fetchFromServer(`games/${gameId}/maze/locations/${row}/${col}`, 'GET')
+    Communication.fetchFromServer(`games/${gameId}/maze/locations/${row}/${col}`, 'GET')
         .then(data => {
             // data = array of objects containing rows & cols (reachable)
             run(data);
-        }).catch(ErrorHandler.handleError);
+        }).catch(Handler.handleAPIError);
 }
 
 
 // -- POST --
 
 function createGame(name, playerName, gameMode, treasureCount, playerCount, mazeRows, run) {
-    CommunicationAbstractor.fetchFromServer('games', 'POST', {
+    Communication.fetchFromServer('games', 'POST', {
         'prefix': Config.GAME_PREFIX,
         'gameName': name,
         'playerName': playerName,
@@ -96,44 +96,44 @@ function createGame(name, playerName, gameMode, treasureCount, playerCount, maze
         .then(data => {
             // data = object with gameId, playerName and playerToken.
             run(data);
-        }).catch(ErrorHandler.handleError);
+        }).catch(Handler.handleAPIError);
 }
 
 function joinGame(gameId, run) {
-    CommunicationAbstractor.fetchFromServer(`games/${gameId}/players/${Storage.loadFromStorage('username')}`, 'POST')
+    Communication.fetchFromServer(`games/${gameId}/players/${Storage.loadFromStorage('username')}`, 'POST')
         .then(data => {
             run(data);
-        }).catch(ErrorHandler.handleError);
+        }).catch(Handler.handleAPIError);
 }
 
 
 // -- DELETE --
 
 function leaveGame(run) {
-    CommunicationAbstractor.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}/players/${Storage.loadFromStorage('username')}`, 'DELETE')
+    Communication.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}/players/${Storage.loadFromStorage('username')}`, 'DELETE')
         .then(data => {
             run(data);
-        }).catch(ErrorHandler.handleError);
+        }).catch(Handler.handleAPIError);
 }
 
 
 // -- PATCH --
 
 function shoveRequest(row, col, gameWalls, gameTreasure, run) {
-    CommunicationAbstractor.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}/maze`, 'PATCH', {
+    Communication.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}/maze`, 'PATCH', {
         'destination': {'row': row, 'col': col},
         'tile': {'walls': gameWalls, 'treasure': gameTreasure, 'players': ['string']}
     }).then(data => {
         run(data);
-    }).catch(ErrorHandler.handleError);
+    }).catch(Handler.handleAPIError);
 }
 
 function moveRequest(row, col, run) {
-    CommunicationAbstractor.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}/players/${Storage.loadFromStorage('username')}/location`, 'PATCH', {
+    Communication.fetchFromServer(`games/${Storage.loadFromStorage('gameId')}/players/${Storage.loadFromStorage('username')}/location`, 'PATCH', {
         'destination': {'row': row, 'col': col}
     }).then(data => {
         run(data);
-    }).catch(ErrorHandler.handleError);
+    }).catch(Handler.handleAPIError);
 }
 
 

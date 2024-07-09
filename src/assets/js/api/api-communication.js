@@ -1,5 +1,5 @@
-import * as Config from '../components/config.js';
-import * as Storage from './local-storage-abstractor.js';
+import * as Config from '../data/config.js';
+import * as Storage from '../components/local-storage.js';
 
 function constructOptions(httpVerb, requestBody) {
   const options = {
