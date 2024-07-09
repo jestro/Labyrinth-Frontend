@@ -43,10 +43,10 @@ function renderInvalidNameError(str) {
 
 function renderGameOptionsError(playerCount, treasureCount, gameName) {
     if (renderInvalidNameError(gameName) === null) {
-        if (!Validate.isCountValid(playerCount, Config.MIN_PLAYERS, Config.MAX_PLAYERS)) {
+        if (!Validate.isPlayerCountValid(playerCount)) {
             renderErrorMessage(`Invalid player count. (${Config.MIN_PLAYERS}-${Config.MAX_PLAYERS})`);
             return;
-        } else if (!Validate.isCountValid(treasureCount, Config.MIN_TREASURES, Config.MAX_TREASURES)) {
+        } else if (!Validate.isTreasureCountValid(treasureCount)) {
             renderErrorMessage(`Invalid treasure goal. (${Config.MIN_TREASURES}-${Config.MAX_TREASURES})`);
             return;
         }
