@@ -43,7 +43,7 @@ function navigate(e, screen) {
 function checkUsernameAndSave(){
     const username = document.querySelector('#player-name').value;
 
-    if (Handler.renderInvalidNameError(username) == null) {
+    if (!Handler.renderInvalidNameError(username)) {
         Storage.saveToStorage('username', username);
     }
 }

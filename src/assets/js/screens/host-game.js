@@ -37,7 +37,7 @@ function hostGame(e) {
     const $gameMode = document.querySelector('#game-mode');
     const gameMode = $gameMode.options[$gameMode.selectedIndex].value;
 
-    if (Handler.renderGameOptionsError(playerCount, treasureCount, gameName) == null) {
+    if (!Handler.renderGameOptionsError(playerCount, treasureCount) && !Handler.renderInvalidNameError(gameName)) {
         Requests.createGame(gameName, Storage.loadFromStorage('username'), gameMode, treasureCount, playerCount, mazeSize, (result) => {
             // Executes when game is created successfully
             Storage.saveToStorage('gameId', result['gameId']);
@@ -45,7 +45,8 @@ function hostGame(e) {
             ScreenManager.switchToScreen('game-lobby');
         });
     } else {
-        Handler.renderGameOptionsError(playerCount, treasureCount, gameName);
+        Handler.renderGameOptionsError(playerCount, treasureCount);
+        Handler.renderInvalidNameError(gameName);
     }
 }
 

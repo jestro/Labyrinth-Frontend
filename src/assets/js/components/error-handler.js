@@ -29,32 +29,28 @@ function renderErrorMessage(error) {
 function renderInvalidNameError(str) {
     if(Validate.isInputEmpty(str)) {
         renderErrorMessage('No empty name');
-        return;
+        return true;
     } else if (!Validate.isInputClean(str)) {
         renderErrorMessage('No illegal characters allowed in name');
-        return;
+        return true;
     } else if (Validate.isInputTooLarge(str)) {
         renderErrorMessage(`Maximum characters is ${Config.CHAR_LIMIT}`);
-        return;
+        return true;
     }
 
-    return null;
+    return false;
 }
 
-function renderGameOptionsError(playerCount, treasureCount, gameName) {
-    if (renderInvalidNameError(gameName) === null) {
-        if (!Validate.isPlayerCountValid(playerCount)) {
-            renderErrorMessage(`Invalid player count. (${Config.MIN_PLAYERS}-${Config.MAX_PLAYERS})`);
-            return;
-        } else if (!Validate.isTreasureCountValid(treasureCount)) {
-            renderErrorMessage(`Invalid treasure goal. (${Config.MIN_TREASURES}-${Config.MAX_TREASURES})`);
-            return;
-        }
-    } else {
-        return renderInvalidNameError(gameName);
+function renderGameOptionsError(playerCount, treasureCount) {
+    if (!Validate.isPlayerCountValid(playerCount)) {
+        renderErrorMessage(`Invalid player count. (${Config.MIN_PLAYERS}-${Config.MAX_PLAYERS})`);
+        return true;
+    } else if (!Validate.isTreasureCountValid(treasureCount)) {
+        renderErrorMessage(`Invalid treasure goal. (${Config.MIN_TREASURES}-${Config.MAX_TREASURES})`);
+        return true;
     }
 
-    return null;
+    return false;
 }
 
 function clearErrorMessage() {
