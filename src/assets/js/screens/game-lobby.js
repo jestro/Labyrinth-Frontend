@@ -7,10 +7,10 @@ import * as Util from "../components/util.js";
 function init() {
     document.querySelector('#leave-lobby').addEventListener('click', leaveLobby);
 
-    fetchAndDisplayPlayerList();
+    displayPlayerList();
 }
 
-function fetchAndDisplayPlayerList() {
+function displayPlayerList() {
     if (Storage.loadFromStorage('gameId') !== null) {
         Requests.getSingularGame(Storage.loadFromStorage('gameId'), '', (result) => {
             const players = result['description']['players'];
@@ -18,7 +18,7 @@ function fetchAndDisplayPlayerList() {
             refreshPlayerList(players, maxCount);
             refreshPlayerCount(players, maxCount);
             refreshPlayerMessage(players, maxCount);
-            setTimeout(fetchAndDisplayPlayerList, Config.UI_POLLING_TIME_SHORT);
+            setTimeout(displayPlayerList, Config.UI_POLLING_TIME_SHORT);
         });
     }
 }

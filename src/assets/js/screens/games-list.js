@@ -5,15 +5,15 @@ import * as Storage from '../components/local-storage.js';
 
 function init() {
     document.querySelector('#join-game').addEventListener('click', joinGame);
-    document.querySelector('#show-all-games').addEventListener('change', fetchAndDisplayGamesList);
-    fetchAndDisplayGamesList();
+    document.querySelector('#show-all-games').addEventListener('change', displayGamesList);
+    displayGamesList();
 }
 
-function fetchAndDisplayGamesList() {
+function displayGamesList() {
     const showAllGames = document.querySelector('#show-all-games').checked;
     Requests.getGamesList(!showAllGames, (games) => {
         showGames(games);
-        setTimeout(fetchAndDisplayGamesList, Config.UI_POLLING_TIME_SHORT);
+        setTimeout(displayGamesList, Config.UI_POLLING_TIME_SHORT);
     });
 }
 

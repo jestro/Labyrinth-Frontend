@@ -33,14 +33,14 @@ function join(e) {
 function navigate(e, screen) {
     e.preventDefault();
 
-    checkUsernameAndSave();
+    checkUsername();
 
     if (Storage.loadFromStorage('username') !== null) {
         ScreenManager.switchToScreen(screen);
     }
 }
 
-function checkUsernameAndSave(){
+function checkUsername(){
     const username = document.querySelector('#player-name').value;
 
     if (!Handler.renderInvalidNameError(username)) {
