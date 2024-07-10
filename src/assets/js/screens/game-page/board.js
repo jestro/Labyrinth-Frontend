@@ -19,6 +19,7 @@ function init() {
     updateLoop();
 }
 
+
 // -- Event Binders --
 
 function bindStaticEvents() {
@@ -42,7 +43,7 @@ function bindDynamicEvents() {
 }
 
 
-// -- Display --
+// -- Game Loop --
 
 function updateLoop() {
     updateScreen();
@@ -50,7 +51,7 @@ function updateLoop() {
 }
 
 function updateScreen() {
-    fetchSpareTile();
+    updateSpareTile();
     displayGame();
 }
 
@@ -74,40 +75,12 @@ function displayGame() {
             ScreenManager.switchToPage('endscreen');
         }
 
-        GameRenderer.displayMaze(game['maze'], playerNames);
+        GameRenderer.renderBoard(game['maze'], playerNames);
         bindDynamicEvents();
-        SidebarRenderer.displaySidebars(game['players'], playerNames, currentShovePlayer, currentMovePlayer);
+        SidebarRenderer.renderSidebars(game['players'], playerNames, currentShovePlayer, currentMovePlayer);
     });
 }
 
-function updateTurnVariables(currentShovePlayer, currentMovePlayer) {
-    isYourShove = currentShovePlayer === Storage.loadFromStorage('username');
-    isYourMove = currentMovePlayer === Storage.loadFromStorage('username');
-}
-
-function updateCurrentObjective(playerData){
-    const newObjective = playerData[Storage.loadFromStorage('username')]['objective'];
-    if(currentObjective !== null && currentObjective !== newObjective){
-        Config.TREASURE_COLLECT_SOUND.play();
-    }
-    currentObjective = newObjective;
-}
-
-function setBoardRows(height){
-    if (boardRows == null || isNaN(boardRows)){
-        boardRows = height;
-        GameRenderer.setMazeDisplaySize(height);
-    }
-}
-
-function setGameMode(mode) {
-    if (gameMode == null) {
-        gameMode = mode;
-        if(gameMode === 'hardcore'){
-            SidebarRenderer.hideRotateButtons();
-        }
-    }
-}
 
 // -- Shove --
 
@@ -120,7 +93,7 @@ function shove(e) {
         const gameTreasure = spareTile['treasure'];
 
         Requests.shoveRequest(row, col, gameWalls, gameTreasure, () => {
-            showReachableLocations();
+            updatePossiblePaths();
         });
 
     });
@@ -140,13 +113,18 @@ function activateArrow($button) {
 }
 
 
-function showReachableLocations() {
-    Requests.getSingularPlayer(Storage.loadFromStorage('username'), (data) => {
-        const {row, col} = data.location;
-        Requests.getReachableLocations(Storage.loadFromStorage('gameId'), row, col, (locations) => {
-            possiblePaths = locations['reachable'];
-        });
+// -- Move --
+
+function move(e) {
+    const row = parseInt(e.target.parentElement.parentElement.dataset['row']);
+    const col = parseInt(e.target.parentElement.parentElement.dataset['col']);
+
+    Requests.moveRequest(row, col, (data) => {
+        if (data['message'] === undefined) {
+            hideReachableLocations();
+        }
     });
+    setTimeout(updateScreen, Config.GAME_POLLING_TIME_SHORT);
 }
 
 function hideReachableLocations() {
@@ -172,22 +150,6 @@ function isValidMove(row, col) {
 }
 
 
-// -- Move --
-
-function move(e) {
-    const row = parseInt(e.target.parentElement.parentElement.dataset['row']);
-    const col = parseInt(e.target.parentElement.parentElement.dataset['col']);
-
-    Requests.moveRequest(row, col, (data) => {
-        if (data['message'] === undefined) {
-            hideReachableLocations();
-        }
-    });
-    setTimeout(updateScreen, Config.GAME_POLLING_TIME_SHORT);
-
-
-}
-
 // -- Leave --
 
 function leaveGame() {
@@ -196,17 +158,8 @@ function leaveGame() {
     });
 }
 
-// -- SpareTile --
 
-function fetchSpareTile() {
-    if (!isYourShove) {
-        Requests.getSingularGame(Storage.loadFromStorage('gameId'), 'spareTile', (data) => {
-            spareTile = data['spareTile'];
-
-            SidebarRenderer.renderSpareTile();
-        });
-    }
-}
+// -- SpareTile Rotation --
 
 function rotateSpareTileClockwise() {
     Config.CLICK_SOUND.play();
@@ -231,7 +184,59 @@ function rotateSpareTileCounterClockwise() {
 }
 
 
-// -- Global variable getters --
+// -- Data Update --
+
+function updatePossiblePaths() {
+    Requests.getSingularPlayer(Storage.loadFromStorage('username'), (data) => {
+        const {row, col} = data.location;
+        Requests.getReachableLocations(Storage.loadFromStorage('gameId'), row, col, (locations) => {
+            possiblePaths = locations['reachable'];
+        });
+    });
+}
+
+function updateSpareTile() {
+    if (!isYourShove) {
+        Requests.getSingularGame(Storage.loadFromStorage('gameId'), 'spareTile', (data) => {
+            spareTile = data['spareTile'];
+        });
+    }
+}
+
+function updateTurnVariables(currentShovePlayer, currentMovePlayer) {
+    isYourShove = currentShovePlayer === Storage.loadFromStorage('username');
+    isYourMove = currentMovePlayer === Storage.loadFromStorage('username');
+}
+
+function updateCurrentObjective(playerData){
+    const newObjective = playerData[Storage.loadFromStorage('username')]['objective'];
+    if(currentObjective !== null && currentObjective !== newObjective){
+        Config.TREASURE_COLLECT_SOUND.play();
+    }
+    currentObjective = newObjective;
+}
+
+
+// -- Data Set --
+
+function setBoardRows(height){
+    if (boardRows == null || isNaN(boardRows)){
+        boardRows = height;
+        GameRenderer.setMazeDisplaySize(height);
+    }
+}
+
+function setGameMode(mode) {
+    if (gameMode == null) {
+        gameMode = mode;
+        if(gameMode === 'hardcore'){
+            SidebarRenderer.hideRotateButtons();
+        }
+    }
+}
+
+
+// -- Data Get --
 
 function getIsYourMove() {
     return isYourMove;

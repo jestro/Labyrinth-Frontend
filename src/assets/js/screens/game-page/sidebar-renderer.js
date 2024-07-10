@@ -1,8 +1,7 @@
 import * as Board from './board.js';
 import * as GameRenderer from './game-renderer.js';
 import * as Storage from '../../components/local-storage.js';
-
-function displaySidebars(playerData, playerNames, currentShovePlayer, currentMovePlayer) {
+function renderSidebars(playerData, playerNames, currentShovePlayer, currentMovePlayer) {
     renderTurnList(playerData, playerNames, currentShovePlayer, currentMovePlayer);
     renderTurnState();
     renderCollectedTreasures(playerData);
@@ -94,4 +93,4 @@ function hideRotateButtons() {
     document.querySelector('#rotate-right').classList.add('hidden');
 }
 
-export { displaySidebars, hideRotateButtons, renderSpareTile };
+export { renderSidebars, hideRotateButtons, renderSpareTile };

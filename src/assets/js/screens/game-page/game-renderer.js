@@ -2,15 +2,16 @@ import * as Board from './board.js';
 import * as Config from '../../data/config.js';
 import * as Util from '../../components/util.js';
 
-// -- Maze Rendering --
 
-function displayMaze(maze, playerNames) {
+// -- Board Rendering --
+
+function renderBoard(maze, playerNames) {
     const $container = document.querySelector('#maze');
     $container.innerHTML = '';
 
-    appendArrowsTopBottom($container, 'top');
+    renderArrowsTopBottom($container, 'top');
     renderMaze($container, maze, playerNames);
-    appendArrowsTopBottom($container, 'bottom');
+    renderArrowsTopBottom($container, 'bottom');
 
     if (maze['oppositePosition'] != null) {
         const oppositeRow = maze['oppositePosition']['row'];
@@ -35,14 +36,14 @@ function renderMaze($container, maze, playerNames) {
         $template.setAttribute('id', `row${x}`);
 
         if (Util.isOdd(x)) {
-            appendArrowsSides($template, x);
+            renderArrowsSides($template, x);
         }
 
         for (let y = 0; y < maze['board'][x].length; y++) {
             const tile = maze['board'][x][y];
             const gridSelector = `.grid-item[data-col="${y}"]`;
 
-            $template.querySelector(gridSelector).append(renderTile(tile, playerNames));
+            $template.querySelector(gridSelector).append(createTile(tile, playerNames));
             $template.querySelector(gridSelector).setAttribute('data-row', x);
             $template.querySelector(gridSelector).setAttribute('data-col', y);
             if (!Board.isValidMove(x, y)){
@@ -55,9 +56,9 @@ function renderMaze($container, maze, playerNames) {
 }
 
 
-// -- Tile Rendering --
+// -- Tile Creation --
 
-function renderTile(tile, playerNames) {
+function createTile(tile, playerNames) {
     const $imageDiv = document.createElement('div');
 
     addTileImage($imageDiv, tile['walls']);
@@ -125,26 +126,27 @@ function getPlayerImagePath(playerNames, playersOnTile) {
     return `${Config.getImageAssetsPath()}/players/${playerNames.indexOf(playersOnTile[0])}.png`
 }
 
+
 // -- Arrow Rendering --
 
-function appendArrowsTopBottom($container, side) {
+function renderArrowsTopBottom($container, side) {
     const $template = document.querySelector('main template').content.firstElementChild.cloneNode(true);
-    for (let col = 0; col < Config.MAZE_ROWS; col++) {
+    for (let col = 1; col < Config.MAZE_ROWS; col++) {
         if(Util.isOdd(col)){
-            $template.querySelector(`.grid-item[data-col="${col}"]`).append(createArrow(side, null, col));
+            $template.querySelector(`.grid-item[data-col="${col}"]`).append(createArrow(arrowPositionObj(side, null, col)));
         }
     }
     $container.insertAdjacentHTML('beforeend', $template.outerHTML);
 }
 
-function appendArrowsSides($template, row) {
+function renderArrowsSides($template, row) {
     const rowSelector = `#row${row}`;
 
-    $template.querySelector(`${rowSelector} .left-arrow`).append(createArrow('left', row, 0));
-    $template.querySelector(`${rowSelector} .right-arrow`).append(createArrow('right', row, Config.MAZE_ROWS - 1));
+    $template.querySelector(`${rowSelector} .left-arrow`).append(createArrow(arrowPositionObj('left', row, 0)));
+    $template.querySelector(`${rowSelector} .right-arrow`).append(createArrow(arrowPositionObj('right', row, Config.MAZE_ROWS - 1)));
 }
 
-function createArrow(side, row, col) {
+function arrowPositionObj(side, row, col) {
     switch (side) {
         case 'left':
             col = 0;
@@ -161,22 +163,27 @@ function createArrow(side, row, col) {
         default:
             break;
     }
-    return styleArrow(side, row, col);
+    return {
+        "row": row,
+        "col": col,
+        "side": side
+    };
 }
 
-function styleArrow(side, row, col) {
+function createArrow(positionObj) {
     const $arrow = document.createElement('button');
-    $arrow.setAttribute('data-row', row);
-    $arrow.setAttribute('data-col', col);
+    $arrow.setAttribute('data-row', positionObj.row);
+    $arrow.setAttribute('data-col', positionObj.col);
 
     $arrow.classList.add(`theme-${Config.UI_THEME}`);
-    $arrow.classList.add(`arrow-${side}`);
+    $arrow.classList.add(`arrow-${positionObj.side}`);
     $arrow.classList.add('arrow');
 
     if (!Board.getIsYourShove()) {
         $arrow.disabled = true;
     }
+
     return $arrow;
 }
 
-export { displayMaze, renderTile, getTreasureImagePath, setMazeDisplaySize };
+export { renderBoard, createTile, getTreasureImagePath, setMazeDisplaySize };
