@@ -7,15 +7,22 @@ function displaySidebars(playerData, playerNames, currentShovePlayer, currentMov
     renderTurnState();
     renderCollectedTreasures(playerData);
     renderCurrentObjective();
+    renderSpareTile();
 }
 
+
+// -- SpareTile Rendering --
+
 function renderSpareTile() {
-    const $spareTileDiv = GameRenderer.renderTile(Board.getSpareTile());
+    const $spareTileDiv = GameRenderer.createTile(Board.getSpareTile());
     const $container = document.querySelector('#spare-tile');
     $spareTileDiv.querySelector('.tile-image').classList.remove('tile-image');
     $container.innerHTML = "";
     $container.innerHTML += $spareTileDiv.innerHTML;
 }
+
+
+// -- Turn List Rendering --
 
 function renderTurnList(playerData, playerNames, currentShovePlayer, currentMovePlayer) {
     const $container = document.querySelector('#turn-list');
@@ -52,11 +59,17 @@ function renderTurnState() {
     }
 }
 
+
+// -- Objective Rendering --
+
 function renderCurrentObjective() {
     if (Board.getCurrentObjective() !== null) {
         document.querySelector('#game-bar #treasure-cards img').src = GameRenderer.getTreasureImagePath(Board.getCurrentObjective());
     }
 }
+
+
+// -- Collected Rendering --
 
 function renderCollectedTreasures(playerData) {
     const $container = document.querySelector('#collected-treasures');
@@ -72,6 +85,9 @@ function renderCollectedTreasureImage(treasure) {
     const treasureImgName = treasure.replaceAll(' ', '-');
     return `<img src="assets/images/minecraft/nature/treasure/${treasureImgName}.png" alt="${treasure}" title="${treasure}">`;
 }
+
+
+// -- Hardcore Game Mode --
 
 function hideRotateButtons() {
     document.querySelector('#rotate-left').classList.add('hidden');
