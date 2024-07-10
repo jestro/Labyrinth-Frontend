@@ -1,9 +1,9 @@
 import * as Board from '../screens/game-page/board.js';
 import * as EndScreen from '../screens/end-screen.js';
-import * as GameLobby from '../screens/game-lobby.js';
-import * as GamesList from '../screens/games-list.js';
-import * as HostGame from '../screens/host-game.js';
-import * as StartScreen from '../screens/start-screen.js';
+import * as GameLobby from '../screens/index-page/game-lobby.js';
+import * as GamesList from '../screens/index-page/games-list.js';
+import * as HostGame from '../screens/index-page/host-game.js';
+import * as StartScreen from '../screens/index-page/start-screen.js';
 
 function init() {
     hideAllScreens();

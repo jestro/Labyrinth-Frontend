@@ -1,8 +1,8 @@
-import * as Config from '../data/config.js';
-import * as Requests from '../api/api-requests.js';
-import * as ScreenManager from '../components/screen-manager.js';
-import * as Storage from '../components/local-storage.js';
-import * as Util from "../components/util.js";
+import * as Config from '../../data/config.js';
+import * as Requests from '../../api/api-requests.js';
+import * as ScreenManager from '../../components/screen-manager.js';
+import * as Storage from '../../components/local-storage.js';
+import * as Util from "../../components/util.js";
 
 function init() {
     document.querySelector('#leave-lobby').addEventListener('click', leaveLobby);

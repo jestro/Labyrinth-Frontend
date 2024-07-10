@@ -1,9 +1,9 @@
-import * as Requests from '../api/api-requests.js';
-import * as ScreenManager from '../components/screen-manager.js';
-import * as Storage from '../components/local-storage.js';
-import * as Util from '../components/util.js';
-import * as Config from '../data/config.js';
-import * as Handler from '../components/error-handler.js';
+import * as Requests from '../../api/api-requests.js';
+import * as ScreenManager from '../../components/screen-manager.js';
+import * as Storage from '../../components/local-storage.js';
+import * as Util from '../../components/util.js';
+import * as Config from '../../data/config.js';
+import * as Handler from '../../components/error-handler.js';
 
 function init() {
     document.querySelector('#game-host').addEventListener('click', hostGame);
